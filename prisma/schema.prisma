@@ -9,7 +9,17 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
+model Compressions {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  data            Json
+  compressSetting String?
+  compressedFile  String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?  @updatedAt
+  deletedAt DateTime?
+}

@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 import * as path from 'path';
 import * as cors from 'cors';
 import * as fs from 'fs';
+import * as multer from 'multer';
 
 dotenv.config();
 const app = express();
@@ -12,8 +13,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 import uploadRouter from './routes/uploadRoutes';
-
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
@@ -22,10 +21,11 @@ app.use('/upload', uploadRouter);
 app.get('/download/compressed/:fileName', (req, res) => {
   const fileName = req.params.fileName;
   const filePath = path.join(__dirname, 'public', 'compressed', fileName);
+
+  console.log(filePath);
+  
 try {
   if (fs.existsSync(filePath)) {
-    res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
-    res.setHeader('Content-Type', 'application/pdf');
     const fileStream = fs.createReadStream(filePath);
     fileStream.pipe(res);
   }

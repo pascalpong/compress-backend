@@ -48,14 +48,14 @@ export const fileCompress = async (req: Request, res: Response) => {
     const file = data.fileName;
 
     // Read the file from the uploads folder
-    const filePath = `public/uploads/${file}`;
+    const filePath = `src/public/uploads/${file}`;
     const fileData = await readFileAsync(filePath);
  
     const compressedPdf = await compressPdf(fileData, dpi, quality);
 
     // Save the compressed file
     const compressedFileName = `compressed_${Date.now()}.pdf`;
-    const compressedFilePath = `public/compressed/${compressedFileName}`;
+    const compressedFilePath = `src/public/compressed/${compressedFileName}`;
     await writeFileAsync(compressedFilePath, compressedPdf);
 
     // Update the compression details in the database

@@ -16,8 +16,8 @@ datasource db {
 model Compressions {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
   data            Json
-  compressSetting String?
-  compressedFile  String?
+  compressSetting Json?
+  compressedFile  Json?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime?  @updatedAt

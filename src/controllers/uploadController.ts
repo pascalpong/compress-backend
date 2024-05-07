@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { Request, Response } from "express"; 
 import { promisify } from 'util';
 import * as fs from 'fs'; 
-import { PDFDocument, PDFName } from 'pdf-lib';
+import { PDFDocument } from 'pdf-lib';
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
@@ -58,7 +58,6 @@ export const fileCompress = async (req: Request, res: Response) => {
     const compressedFilePath = `src/public/compressed/${compressedFileName}`;
     await writeFileAsync(compressedFilePath, compressedPdf);
 
-    // Update the compression details in the database
     const result = await prisma.compressions.update({
       where: { id: jobId },
       data: {
